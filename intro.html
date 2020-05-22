@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="phaser.min.js"></script>
+</head>
+<body>
+    <script>
+        var config = {
+            type: Phaser.CANVAS,
+            width: 1400,
+            height: 724,
+            scene: {
+                preload: preload,
+                create: create
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        function preload() {
+            this.load.image('solid', 'assets/Solid.png');
+            this.load.image('buttonrow', 'assets/buttons.png');
+            this.load.image('buttonpress', 'assets/buttonpress.png')
+            this.load.image('grid', 'assets/grid.png');
+            this.load.image('speechbubble', 'assets/speechbubble.png');
+            this.load.image('whitegrid', 'assets/whitegrid.png');
+            this.load.image('highlightedside', 'assets/highlightedside.png');
+            this.load.image('paintbrush', 'assets/paintbrush.png');
+            this.load.image('speechbubble2', 'assets/speechbubble2.png');
+            this.load.image('whitebg', 'assets/whitebg.png');
+            this.load.image('sidedimensions', 'assets/sidedimensions.png');
+            this.load.image('speechbubble3', 'assets/speechbubble3.png');
+            this.load.image('equationtab', 'assets/equationtab.png');
+            this.load.image('whiteline', 'assets/whiteline.png');
+            this.load.image('speechbubble4', 'assets/speechbubble4.png');
+        }
+
+        function create() {
+            this.cameras.main.setBackgroundColor(0xDCD8DC);
+
+            text = this.add.text(150, 110, 'Find the surface area of the following solid', { font: "24px Century Gothic", fill: "#000000" });
+
+            solid = this.add.image(400, 350, 'solid');
+            solid.setScale(0.7);
+
+            buttonrow = this.add.image(400, 600, 'buttonrow');
+            buttonrow.setScale(0.7);
+
+            buttonpress = this.add.image(118, 597, 'buttonpress').setInteractive();
+            buttonpress.on('pointerdown', () => {
+                solid.angle = -90;
+                whitegrid.visible = true;
+                speechbubble.visible = false;
+                timeline2.play();
+                buttonpress.removeInteractive();
+            });
+
+            speechbubble = this.add.image(220, 460, 'speechbubble');
+            speechbubble.setScale(0.7);
+            speechbubble.alpha = 0;
+
+            var timeline = this.tweens.createTimeline();
+
+            timeline.add({
+                targets: speechbubble,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 2000
+            });
+
+            timeline.play();
+
+            highlightedside = this.add.image(385, 360, 'highlightedside').setInteractive();
+            highlightedside.setScale(0.69);
+            highlightedside.alpha = 0;
+
+            speechbubble2 = this.add.image(180, 350, 'speechbubble2');
+            speechbubble2.setScale(0.7);
+            speechbubble2.alpha = 0;
+
+            paintbrush = this.add.image(280, 400, 'paintbrush');
+            paintbrush.setScale(0.7);
+            paintbrush.alpha = 0;
+
+            highlightedside.on('pointerdown', () => {
+                whitebg.visible = true;
+                sidedimensions.visible = true;
+                highlightedside.visible = false;
+                speechbubble2.visible = false;
+                paintbrush.visible = false;
+                highlightedside.removeInteractive();
+                timeline3.play();
+                clickanywhere.setInteractive();
+            });
+
+            var timeline2 = this.tweens.createTimeline();
+
+            timeline2.add({
+                targets: [highlightedside, paintbrush, speechbubble2],
+                alpha: 1,
+                ease: 'Power1',
+                duration: 2000
+            });
+
+            whitebg = this.add.image(0, 0, 'whitebg');
+            whitebg.setScale(2);
+            whitebg.alpha = 0.9;
+            whitebg.visible = false;
+
+            grid = this.add.image(1100, 370, 'grid');
+            grid.setScale(0.7);
+
+            whitegrid = this.add.image(1100, 370, 'whitegrid');
+            whitegrid.setScale(0.7);
+            whitegrid.alpha = 0.9;
+            whitegrid.visible = false;
+
+            sidedimensions = this.add.image(385, 360, 'sidedimensions');
+            sidedimensions.setScale(0.69);
+            sidedimensions.visible = false;
+
+            speechbubble3 = this.add.image(730, 380, 'speechbubble3');
+            speechbubble3.setScale(0.7);
+            speechbubble3.alpha = 0;
+            
+            equationtab = this.add.image(870, 560, 'equationtab');
+            equationtab.setScale(0.7);
+            equationtab.alpha = 0;
+
+            whiteline = this.add.image(800, 510, 'whiteline'); //800 covered, 960 uncovered
+            whiteline.setScale(0.4);
+            whiteline.alpha = 0;
+
+            text2 = this.add.text(990, 580, '18', { font: "24px Century Gothic", fill: "#000000", stroke: "#000000", strokeThickness: 2 });
+            text2.alpha = 0;
+
+            clickanywhere = this.add.image(0, 0, 'whitebg');
+            clickanywhere.setScale(2);
+            clickanywhere.alpha = 0.1;
+
+            shapeimg = this.add.image(960, 185, 'highlightedside');
+            shapeimg.setScale(0.18);
+            shapeimg.alpha = 0;
+
+            speechbubble4 = this.add.image(1180, 290, 'speechbubble4');
+            speechbubble4.setScale(0.7);
+            speechbubble4.alpha = 0;
+
+            clickanywhere.on('pointerdown', () => {
+                speechbubble3.visible = false;
+                timeline4.play();
+            });
+
+            var timeline3 = this.tweens.createTimeline();
+
+            timeline3.add({
+                targets: speechbubble3,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 2000
+            });
+            timeline3.add({
+                targets: whiteline,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 400
+            });
+            timeline3.add({
+                targets: equationtab,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 700
+            });
+            timeline3.add({
+                targets: whiteline,
+                x: 960,
+                ease: 'Power1',
+                duration: 1000
+            });
+            timeline3.add({
+                targets: text2,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 500
+            });
+
+            var timeline4 = this.tweens.createTimeline();
+
+            timeline4.add({
+                targets: shapeimg,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 300
+            });
+            timeline4.add({
+                targets: whitegrid,
+                alpha: 0,
+                ease: 'Power1',
+                duration: 500
+            });
+            timeline4.add({
+                targets: speechbubble4,
+                alpha: 1,
+                ease: 'Power1',
+                duration: 1200
+            });
+            timeline4.add({
+                targets: text2,
+                x: 1180,
+                y: 170,
+                ease: 'Power1',
+                duration: 1200
+            });
+        }
+    </script>
+</body>
+</html>

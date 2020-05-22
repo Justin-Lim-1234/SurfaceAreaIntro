@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="phaser.min.js"></script>
+</head>
+<body>
+    <script>
+        var config = {
+            type: Phaser.CANVAS,
+            width: 1400,
+            height: 724,
+            scene: {
+                preload: preload,
+                create: create
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        function preload() {
+            this.load.image('title', 'assets/title.png');
+            this.load.image('instructionsButton', 'assets/InstructionsButton.png');
+            this.load.image('solid', 'assets/Solid.png');
+            this.load.image('buttonrow', 'assets/buttons.png');
+            this.load.image('grid', 'assets/grid.png');
+        }
+
+        function create() {
+            this.cameras.main.setBackgroundColor(0xDCD8DC);
+
+            title = this.add.image(620, 330, 'title'); //Adds image at this coords
+            title.setScale(0.8); //Set smaller scale because the image was too large
+
+            insButton = this.add.image(1120, 600, 'instructionsButton').setInteractive(); //Allows the image to become a button
+            insButton.setScale(0.8);
+
+            insButton.on('pointerdown', () => { window.open("intro.html", "_self")});
+            //When the button is pressed, remove the title and button images. Also remove the ability to click button
+        }
+    </script>
+</body>
+</html>
